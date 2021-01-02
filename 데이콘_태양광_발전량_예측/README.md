@@ -27,3 +27,5 @@ Main Task
 (2020.12.29) : 1.95749(public : 26th) - 일조시간 feature만 추가. 하루 뒤 예측 + 이틀 뒤 예측 데이터 각각 만들어 사용
 
 (2020.12.30) : 1.90137(public : 18th) - 일조시간 feature + GHI feature
+
+(2021.01.02) : 1.8868(public : 15th) - GHI 변수 cosine 함수 적용 미 앙상블 비중 변화
