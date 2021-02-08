@@ -31,3 +31,5 @@ Main Task
 (2021.01.02) : 1.8868(public : 15th) - GHI 변수 cosine 함수 적용 미 앙상블 비중 변화
 
 (2021.01.03) : 1.88031(public : 14th) - WS, degree 변수 제거
+
+(2021.01.16) : 1.86199(public : 70th)
