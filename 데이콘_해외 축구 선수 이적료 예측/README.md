@@ -2,7 +2,7 @@
 
 랭크 : 14 / 149(RMSE : 143254.91334 / 2021.05.21 기준)
 
-![Uploading 스크린샷 2021-05-21 10.01.44.png…]()
+<img width="982" alt="스크린샷 2021-05-21 10 01 44" src="https://user-images.githubusercontent.com/49870977/119067003-0de69d00-ba1c-11eb-8107-e5fafa33e8f5.png">
 
 ## 본 competition은 대회용이 아닌 교육용 competition
 
