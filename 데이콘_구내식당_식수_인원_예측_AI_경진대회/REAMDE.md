@@ -2,10 +2,10 @@
 
 ***
 
-## 주제 : 구내식당의 요일별 점심, 저녁 식사 인원 예측
-## 주최 / 주관 : LH / DACON
-### 평가지표 : MAE(mean absolute error)
-### Leader Board : private 13 / 481(Top 2.7%)
+### 주제 : 구내식당의 요일별 점심, 저녁 식사 인원 예측
+### 주최 / 주관 : LH / DACON
+#### 평가지표 : MAE(mean absolute error)
+#### Leader Board : private 13 / 481(Top 2.7%)
 
 #### 리뷰)
 - 학습 데이터가 1200여개로 모델 구성 및 검증에 한계가 있었음.
