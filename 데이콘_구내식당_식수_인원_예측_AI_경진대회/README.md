@@ -2,6 +2,9 @@
 
 ***
 
+<img width="917" alt="스크린샷 2021-07-26 22 55 27" src="https://user-images.githubusercontent.com/49870977/127412722-47da593e-e630-446d-863c-d5a320cc358d.png">
+
+
 ### - 주제 : 구내식당의 요일별 점심, 저녁 식사 인원 예측
 ### - 주최 / 주관 : LH / DACON
 #### - 평가지표 : MAE(mean absolute error)
