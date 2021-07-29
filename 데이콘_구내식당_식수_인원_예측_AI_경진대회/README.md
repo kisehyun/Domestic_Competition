@@ -2,7 +2,8 @@
 
 ***
 
-<img width="917" alt="스크린샷 2021-07-26 22 55 27" src="https://user-images.githubusercontent.com/49870977/127412722-47da593e-e630-446d-863c-d5a320cc358d.png">
+
+<img width="1218" alt="스크린샷 2021-07-29 09 22 05" src="https://user-images.githubusercontent.com/49870977/127412762-e7571a35-b030-4f30-a582-0a8b95ed4e38.png">
 
 
 ### - 주제 : 구내식당의 요일별 점심, 저녁 식사 인원 예측
