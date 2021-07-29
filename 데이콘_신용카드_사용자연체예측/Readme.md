@@ -1,6 +1,9 @@
 # DACON 신용카드 사용자 연체 여부  예측 competition
 ***
 
+<img width="643" alt="스크린샷 2021-07-29 22 54 07" src="https://user-images.githubusercontent.com/49870977/127504487-01113b91-d519-4114-ba2c-5070115df15d.png">
+
+
 
 ### 월간 데이콘 14 | 금융 | 정형 | Logloss
 
