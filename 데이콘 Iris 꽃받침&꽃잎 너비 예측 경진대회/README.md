@@ -3,7 +3,12 @@
 
 ### Evaluation : MAE(Mean Absolute Error)
 
+### Model Selection
+- KFold
+- LeaveOneOut
+
 
 < Leader Board >
 
 - 2021/10/19 = 0.21161
+- 2021/10/20 = 0.17558
