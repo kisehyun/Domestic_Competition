@@ -17,4 +17,4 @@
 
 #### 방법론
 - species에 대해 target encoding(mean) 적용
-- sepal length, petal length에 대해 각가 cos, sin 적요 변수 추가 
+- sepal length, petal length에 대해 각각 cos, sin 적용 변수 추가 
