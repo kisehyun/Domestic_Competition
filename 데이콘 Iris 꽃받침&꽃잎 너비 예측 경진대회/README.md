@@ -8,7 +8,13 @@
 - LeaveOneOut
 
 
-< Leader Board >
+#### < Leader Board >
 
 - 2021/10/19 = 0.21161
 - 2021/10/20 = 0.17558
+- 2021/10/21 = 0.17551
+
+
+#### 방법론
+- species에 대해 target encoding(mean) 적용
+- sepal length, petal length에 대해 각가 cos, sin 적요 변수 추가 
