@@ -2,6 +2,12 @@
 
 ### Evaluation : NMAE
 
+### Features
+- 계절
+- 구분
+- 시간
+
+
 ### Learder Board(PB)
 
 - 20211025 : 0.10717(21th)
