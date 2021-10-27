@@ -4,7 +4,7 @@
 ### Evaluation : MAE(Mean Absolute Error)
 
 ### Model Selection
-- KFold
+- KFold(15Fold)
 - LeaveOneOut
 
 
@@ -14,8 +14,11 @@
 - 2021/10/20 = 0.17558
 - 2021/10/21 = 0.17551
 - 2021/10/26 = 0.17498
+- 2021/10/27 = 0.17382
+
 
 #### 방법론
 - species에 대해 target encoding(mean) 적용
 - sepal length, petal length에 대해 각각 cos, sin 적용 변수 추가 
-- 파생변수 없이 species에 대해 원-핫 인코딩만 추가해서 제출한게 현재 best(10/26기준)
+- 파생변수 없이 species에 대해 원-핫 인코딩만 추가
+- 15FOLD Ensemble(4models + one-hot encoding) : best
