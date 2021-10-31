@@ -1,5 +1,4 @@
-<img width="951" alt="스크린샷 2021-10-19 11 17 02" src="https://user-images.githubusercontent.com/49870977/137832696-d87f6832-75fc-47d9-b9ea-c7a5982ddf13.png">
-
+<img width="1198" alt="스크린샷 2021-10-31 13 18 26" src="https://user-images.githubusercontent.com/49870977/139567417-ee7e3fdf-0014-46ed-8f0d-0a05ea06b8b1.png">
 
 ### Evaluation : MAE(Mean Absolute Error)
 
