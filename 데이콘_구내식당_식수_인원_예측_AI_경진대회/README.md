@@ -6,8 +6,8 @@
 <img width="1218" alt="스크린샷 2021-07-29 09 22 05" src="https://user-images.githubusercontent.com/49870977/127412762-e7571a35-b030-4f30-a582-0a8b95ed4e38.png">
 
 
-### - Evaluation : MAE(mean absolute error)
-### - Leader Board : private 13 / 481(Top 2.7%)
+### Evaluation : MAE(mean absolute error)
+### Leader Board : private 13 / 481(Top 2.7%)
 
 #### Review)
 
