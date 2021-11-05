@@ -1,1 +1,1 @@
-asdf
+- combination을 활용한 변수선택 후 XGBoost 사용 : PB = 0.48063(2021/11/05)
