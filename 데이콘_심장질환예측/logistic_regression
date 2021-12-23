@@ -1,0 +1,1224 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "d59252f4",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pandas as pd\n",
+    "import numpy as np\n",
+    "import warnings\n",
+    "warnings.filterwarnings('ignore')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "e5c5661c",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "train = pd.read_csv(\"train.csv\")\n",
+    "test = pd.read_csv(\"test.csv\")\n",
+    "submission = pd.read_csv(\"sample_submission.csv\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "37708d4c",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>id</th>\n",
+       "      <th>age</th>\n",
+       "      <th>sex</th>\n",
+       "      <th>cp</th>\n",
+       "      <th>trestbps</th>\n",
+       "      <th>chol</th>\n",
+       "      <th>fbs</th>\n",
+       "      <th>restecg</th>\n",
+       "      <th>thalach</th>\n",
+       "      <th>exang</th>\n",
+       "      <th>oldpeak</th>\n",
+       "      <th>slope</th>\n",
+       "      <th>ca</th>\n",
+       "      <th>thal</th>\n",
+       "      <th>target</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>1</td>\n",
+       "      <td>53</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>130</td>\n",
+       "      <td>197</td>\n",
+       "      <td>1</td>\n",
+       "      <td>0</td>\n",
+       "      <td>152</td>\n",
+       "      <td>0</td>\n",
+       "      <td>1.2</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>2</td>\n",
+       "      <td>52</td>\n",
+       "      <td>1</td>\n",
+       "      <td>3</td>\n",
+       "      <td>152</td>\n",
+       "      <td>298</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>178</td>\n",
+       "      <td>0</td>\n",
+       "      <td>1.2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>0</td>\n",
+       "      <td>3</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>3</td>\n",
+       "      <td>54</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>192</td>\n",
+       "      <td>283</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>195</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0.0</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>3</td>\n",
+       "      <td>0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>4</td>\n",
+       "      <td>45</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>138</td>\n",
+       "      <td>236</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>152</td>\n",
+       "      <td>1</td>\n",
+       "      <td>0.2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>0</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>5</td>\n",
+       "      <td>35</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>122</td>\n",
+       "      <td>192</td>\n",
+       "      <td>0</td>\n",
+       "      <td>1</td>\n",
+       "      <td>174</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0.0</td>\n",
+       "      <td>2</td>\n",
+       "      <td>0</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "   id  age  sex  cp  trestbps  chol  fbs  restecg  thalach  exang  oldpeak  \\\n",
+       "0   1   53    1   2       130   197    1        0      152      0      1.2   \n",
+       "1   2   52    1   3       152   298    1        1      178      0      1.2   \n",
+       "2   3   54    1   1       192   283    0        0      195      0      0.0   \n",
+       "3   4   45    0   0       138   236    0        0      152      1      0.2   \n",
+       "4   5   35    1   1       122   192    0        1      174      0      0.0   \n",
+       "\n",
+       "   slope  ca  thal  target  \n",
+       "0      0   0     2       1  \n",
+       "1      1   0     3       1  \n",
+       "2      2   1     3       0  \n",
+       "3      1   0     2       1  \n",
+       "4      2   0     2       1  "
+      ]
+     },
+     "execution_count": 3,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "train.head()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "id": "f9299251",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>id</th>\n",
+       "      <th>age</th>\n",
+       "      <th>sex</th>\n",
+       "      <th>cp</th>\n",
+       "      <th>trestbps</th>\n",
+       "      <th>chol</th>\n",
+       "      <th>fbs</th>\n",
+       "      <th>restecg</th>\n",
+       "      <th>thalach</th>\n",
+       "      <th>exang</th>\n",
+       "      <th>oldpeak</th>\n",
+       "      <th>slope</th>\n",
+       "      <th>ca</th>\n",
+       "      <th>thal</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>1</td>\n",
+       "      <td>57</td>\n",
+       "      <td>1</td>\n",
+       "      <td>0</td>\n",
+       "      <td>150</td>\n",
+       "      <td>276</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>112</td>\n",
+       "      <td>1</td>\n",
+       "      <td>0.6</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>2</td>\n",
+       "      <td>59</td>\n",
+       "      <td>1</td>\n",
+       "      <td>3</td>\n",
+       "      <td>170</td>\n",
+       "      <td>288</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>159</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0.2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>0</td>\n",
+       "      <td>3</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>3</td>\n",
+       "      <td>57</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>150</td>\n",
+       "      <td>126</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1</td>\n",
+       "      <td>173</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0.2</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>3</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>4</td>\n",
+       "      <td>56</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>134</td>\n",
+       "      <td>409</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>150</td>\n",
+       "      <td>1</td>\n",
+       "      <td>1.9</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "      <td>3</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>5</td>\n",
+       "      <td>71</td>\n",
+       "      <td>0</td>\n",
+       "      <td>2</td>\n",
+       "      <td>110</td>\n",
+       "      <td>265</td>\n",
+       "      <td>1</td>\n",
+       "      <td>0</td>\n",
+       "      <td>130</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0.0</td>\n",
+       "      <td>2</td>\n",
+       "      <td>1</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "   id  age  sex  cp  trestbps  chol  fbs  restecg  thalach  exang  oldpeak  \\\n",
+       "0   1   57    1   0       150   276    0        0      112      1      0.6   \n",
+       "1   2   59    1   3       170   288    0        0      159      0      0.2   \n",
+       "2   3   57    1   2       150   126    1        1      173      0      0.2   \n",
+       "3   4   56    0   0       134   409    0        0      150      1      1.9   \n",
+       "4   5   71    0   2       110   265    1        0      130      0      0.0   \n",
+       "\n",
+       "   slope  ca  thal  \n",
+       "0      1   1     1  \n",
+       "1      1   0     3  \n",
+       "2      2   1     3  \n",
+       "3      1   2     3  \n",
+       "4      2   1     2  "
+      ]
+     },
+     "execution_count": 4,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "test.head()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "id": "be2a59bc",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "train = train.iloc[:, 1:]\n",
+    "test = test.iloc[:, 1:]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "id": "78df7131",
+   "metadata": {
+    "scrolled": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "1    83\n",
+       "0    68\n",
+       "Name: target, dtype: int64"
+      ]
+     },
+     "execution_count": 6,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "train.target.value_counts()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "id": "3c2c6f2f",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>age</th>\n",
+       "      <th>sex</th>\n",
+       "      <th>cp</th>\n",
+       "      <th>trestbps</th>\n",
+       "      <th>chol</th>\n",
+       "      <th>fbs</th>\n",
+       "      <th>restecg</th>\n",
+       "      <th>thalach</th>\n",
+       "      <th>exang</th>\n",
+       "      <th>oldpeak</th>\n",
+       "      <th>slope</th>\n",
+       "      <th>ca</th>\n",
+       "      <th>thal</th>\n",
+       "      <th>target</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>count</th>\n",
+       "      <td>151.000000</td>\n",
+       "      <td>151.000000</td>\n",
+       "      <td>151.000000</td>\n",
+       "      <td>151.000000</td>\n",
+       "      <td>151.000000</td>\n",
+       "      <td>151.000000</td>\n",
+       "      <td>151.000000</td>\n",
+       "      <td>151.000000</td>\n",
+       "      <td>151.000000</td>\n",
+       "      <td>151.000000</td>\n",
+       "      <td>151.000000</td>\n",
+       "      <td>151.000000</td>\n",
+       "      <td>151.000000</td>\n",
+       "      <td>151.000000</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>mean</th>\n",
+       "      <td>54.496689</td>\n",
+       "      <td>0.682119</td>\n",
+       "      <td>1.066225</td>\n",
+       "      <td>132.033113</td>\n",
+       "      <td>244.529801</td>\n",
+       "      <td>0.158940</td>\n",
+       "      <td>0.509934</td>\n",
+       "      <td>150.629139</td>\n",
+       "      <td>0.324503</td>\n",
+       "      <td>0.976821</td>\n",
+       "      <td>1.377483</td>\n",
+       "      <td>0.602649</td>\n",
+       "      <td>2.317881</td>\n",
+       "      <td>0.549669</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>std</th>\n",
+       "      <td>8.904586</td>\n",
+       "      <td>0.467202</td>\n",
+       "      <td>1.056213</td>\n",
+       "      <td>17.909929</td>\n",
+       "      <td>56.332206</td>\n",
+       "      <td>0.366837</td>\n",
+       "      <td>0.514685</td>\n",
+       "      <td>23.466463</td>\n",
+       "      <td>0.469747</td>\n",
+       "      <td>1.085998</td>\n",
+       "      <td>0.640226</td>\n",
+       "      <td>0.917093</td>\n",
+       "      <td>0.604107</td>\n",
+       "      <td>0.499183</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>min</th>\n",
+       "      <td>34.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>94.000000</td>\n",
+       "      <td>131.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>88.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>25%</th>\n",
+       "      <td>48.500000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>120.000000</td>\n",
+       "      <td>208.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>136.500000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>1.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>2.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>50%</th>\n",
+       "      <td>54.000000</td>\n",
+       "      <td>1.000000</td>\n",
+       "      <td>1.000000</td>\n",
+       "      <td>130.000000</td>\n",
+       "      <td>239.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>1.000000</td>\n",
+       "      <td>155.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>0.800000</td>\n",
+       "      <td>1.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>2.000000</td>\n",
+       "      <td>1.000000</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>75%</th>\n",
+       "      <td>61.000000</td>\n",
+       "      <td>1.000000</td>\n",
+       "      <td>2.000000</td>\n",
+       "      <td>140.000000</td>\n",
+       "      <td>270.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>1.000000</td>\n",
+       "      <td>168.000000</td>\n",
+       "      <td>1.000000</td>\n",
+       "      <td>1.600000</td>\n",
+       "      <td>2.000000</td>\n",
+       "      <td>1.000000</td>\n",
+       "      <td>3.000000</td>\n",
+       "      <td>1.000000</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>max</th>\n",
+       "      <td>77.000000</td>\n",
+       "      <td>1.000000</td>\n",
+       "      <td>3.000000</td>\n",
+       "      <td>192.000000</td>\n",
+       "      <td>564.000000</td>\n",
+       "      <td>1.000000</td>\n",
+       "      <td>2.000000</td>\n",
+       "      <td>195.000000</td>\n",
+       "      <td>1.000000</td>\n",
+       "      <td>5.600000</td>\n",
+       "      <td>2.000000</td>\n",
+       "      <td>3.000000</td>\n",
+       "      <td>3.000000</td>\n",
+       "      <td>1.000000</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "              age         sex          cp    trestbps        chol         fbs  \\\n",
+       "count  151.000000  151.000000  151.000000  151.000000  151.000000  151.000000   \n",
+       "mean    54.496689    0.682119    1.066225  132.033113  244.529801    0.158940   \n",
+       "std      8.904586    0.467202    1.056213   17.909929   56.332206    0.366837   \n",
+       "min     34.000000    0.000000    0.000000   94.000000  131.000000    0.000000   \n",
+       "25%     48.500000    0.000000    0.000000  120.000000  208.000000    0.000000   \n",
+       "50%     54.000000    1.000000    1.000000  130.000000  239.000000    0.000000   \n",
+       "75%     61.000000    1.000000    2.000000  140.000000  270.000000    0.000000   \n",
+       "max     77.000000    1.000000    3.000000  192.000000  564.000000    1.000000   \n",
+       "\n",
+       "          restecg     thalach       exang     oldpeak       slope          ca  \\\n",
+       "count  151.000000  151.000000  151.000000  151.000000  151.000000  151.000000   \n",
+       "mean     0.509934  150.629139    0.324503    0.976821    1.377483    0.602649   \n",
+       "std      0.514685   23.466463    0.469747    1.085998    0.640226    0.917093   \n",
+       "min      0.000000   88.000000    0.000000    0.000000    0.000000    0.000000   \n",
+       "25%      0.000000  136.500000    0.000000    0.000000    1.000000    0.000000   \n",
+       "50%      1.000000  155.000000    0.000000    0.800000    1.000000    0.000000   \n",
+       "75%      1.000000  168.000000    1.000000    1.600000    2.000000    1.000000   \n",
+       "max      2.000000  195.000000    1.000000    5.600000    2.000000    3.000000   \n",
+       "\n",
+       "             thal      target  \n",
+       "count  151.000000  151.000000  \n",
+       "mean     2.317881    0.549669  \n",
+       "std      0.604107    0.499183  \n",
+       "min      0.000000    0.000000  \n",
+       "25%      2.000000    0.000000  \n",
+       "50%      2.000000    1.000000  \n",
+       "75%      3.000000    1.000000  \n",
+       "max      3.000000    1.000000  "
+      ]
+     },
+     "execution_count": 7,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "train.describe()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "id": "8bc487f5",
+   "metadata": {
+    "scrolled": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>age</th>\n",
+       "      <th>sex</th>\n",
+       "      <th>cp</th>\n",
+       "      <th>trestbps</th>\n",
+       "      <th>chol</th>\n",
+       "      <th>fbs</th>\n",
+       "      <th>restecg</th>\n",
+       "      <th>thalach</th>\n",
+       "      <th>exang</th>\n",
+       "      <th>oldpeak</th>\n",
+       "      <th>slope</th>\n",
+       "      <th>ca</th>\n",
+       "      <th>thal</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>count</th>\n",
+       "      <td>152.000000</td>\n",
+       "      <td>152.000000</td>\n",
+       "      <td>152.000000</td>\n",
+       "      <td>152.000000</td>\n",
+       "      <td>152.000000</td>\n",
+       "      <td>152.000000</td>\n",
+       "      <td>152.000000</td>\n",
+       "      <td>152.000000</td>\n",
+       "      <td>152.000000</td>\n",
+       "      <td>152.000000</td>\n",
+       "      <td>152.000000</td>\n",
+       "      <td>152.000000</td>\n",
+       "      <td>152.000000</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>mean</th>\n",
+       "      <td>54.236842</td>\n",
+       "      <td>0.684211</td>\n",
+       "      <td>0.868421</td>\n",
+       "      <td>131.217105</td>\n",
+       "      <td>247.986842</td>\n",
+       "      <td>0.138158</td>\n",
+       "      <td>0.546053</td>\n",
+       "      <td>148.671053</td>\n",
+       "      <td>0.328947</td>\n",
+       "      <td>1.101974</td>\n",
+       "      <td>1.421053</td>\n",
+       "      <td>0.855263</td>\n",
+       "      <td>2.309211</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>std</th>\n",
+       "      <td>9.282710</td>\n",
+       "      <td>0.466366</td>\n",
+       "      <td>1.001219</td>\n",
+       "      <td>17.210392</td>\n",
+       "      <td>47.059071</td>\n",
+       "      <td>0.346206</td>\n",
+       "      <td>0.537825</td>\n",
+       "      <td>22.368313</td>\n",
+       "      <td>0.471384</td>\n",
+       "      <td>1.231564</td>\n",
+       "      <td>0.592741</td>\n",
+       "      <td>1.106321</td>\n",
+       "      <td>0.622253</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>min</th>\n",
+       "      <td>29.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>94.000000</td>\n",
+       "      <td>126.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>71.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>25%</th>\n",
+       "      <td>46.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>120.000000</td>\n",
+       "      <td>213.750000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>133.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>1.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>2.000000</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>50%</th>\n",
+       "      <td>56.000000</td>\n",
+       "      <td>1.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>130.000000</td>\n",
+       "      <td>242.500000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>1.000000</td>\n",
+       "      <td>151.500000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>0.750000</td>\n",
+       "      <td>1.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>2.000000</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>75%</th>\n",
+       "      <td>61.000000</td>\n",
+       "      <td>1.000000</td>\n",
+       "      <td>2.000000</td>\n",
+       "      <td>140.000000</td>\n",
+       "      <td>282.000000</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>1.000000</td>\n",
+       "      <td>164.250000</td>\n",
+       "      <td>1.000000</td>\n",
+       "      <td>1.800000</td>\n",
+       "      <td>2.000000</td>\n",
+       "      <td>1.250000</td>\n",
+       "      <td>3.000000</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>max</th>\n",
+       "      <td>76.000000</td>\n",
+       "      <td>1.000000</td>\n",
+       "      <td>3.000000</td>\n",
+       "      <td>200.000000</td>\n",
+       "      <td>409.000000</td>\n",
+       "      <td>1.000000</td>\n",
+       "      <td>2.000000</td>\n",
+       "      <td>202.000000</td>\n",
+       "      <td>1.000000</td>\n",
+       "      <td>6.200000</td>\n",
+       "      <td>2.000000</td>\n",
+       "      <td>4.000000</td>\n",
+       "      <td>3.000000</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "              age         sex          cp    trestbps        chol         fbs  \\\n",
+       "count  152.000000  152.000000  152.000000  152.000000  152.000000  152.000000   \n",
+       "mean    54.236842    0.684211    0.868421  131.217105  247.986842    0.138158   \n",
+       "std      9.282710    0.466366    1.001219   17.210392   47.059071    0.346206   \n",
+       "min     29.000000    0.000000    0.000000   94.000000  126.000000    0.000000   \n",
+       "25%     46.000000    0.000000    0.000000  120.000000  213.750000    0.000000   \n",
+       "50%     56.000000    1.000000    0.000000  130.000000  242.500000    0.000000   \n",
+       "75%     61.000000    1.000000    2.000000  140.000000  282.000000    0.000000   \n",
+       "max     76.000000    1.000000    3.000000  200.000000  409.000000    1.000000   \n",
+       "\n",
+       "          restecg     thalach       exang     oldpeak       slope          ca  \\\n",
+       "count  152.000000  152.000000  152.000000  152.000000  152.000000  152.000000   \n",
+       "mean     0.546053  148.671053    0.328947    1.101974    1.421053    0.855263   \n",
+       "std      0.537825   22.368313    0.471384    1.231564    0.592741    1.106321   \n",
+       "min      0.000000   71.000000    0.000000    0.000000    0.000000    0.000000   \n",
+       "25%      0.000000  133.000000    0.000000    0.000000    1.000000    0.000000   \n",
+       "50%      1.000000  151.500000    0.000000    0.750000    1.000000    0.000000   \n",
+       "75%      1.000000  164.250000    1.000000    1.800000    2.000000    1.250000   \n",
+       "max      2.000000  202.000000    1.000000    6.200000    2.000000    4.000000   \n",
+       "\n",
+       "             thal  \n",
+       "count  152.000000  \n",
+       "mean     2.309211  \n",
+       "std      0.622253  \n",
+       "min      0.000000  \n",
+       "25%      2.000000  \n",
+       "50%      2.000000  \n",
+       "75%      3.000000  \n",
+       "max      3.000000  "
+      ]
+     },
+     "execution_count": 8,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "test.describe()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "id": "b08827bc",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from sklearn.svm import SVC\n",
+    "from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier\n",
+    "from sklearn.linear_model import LogisticRegression\n",
+    "from sklearn.metrics import f1_score\n",
+    "from sklearn.model_selection import StratifiedKFold, GridSearchCV"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 76,
+   "id": "d9253ce8",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "skf = StratifiedKFold(n_splits = 20, random_state = 42, shuffle = True)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "id": "1ecd0558",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "X = train.drop('target', axis = 1)\n",
+    "y = train.target"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "id": "7c30c8bc",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "target = test.copy()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "id": "9aeb69ab",
+   "metadata": {
+    "scrolled": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "((151, 13), (152, 13))"
+      ]
+     },
+     "execution_count": 14,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "X.shape, target.shape"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 15,
+   "id": "6b5ee9f6",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "Index(['age', 'sex', 'cp', 'trestbps', 'chol', 'fbs', 'restecg', 'thalach',\n",
+       "       'exang', 'oldpeak', 'slope', 'ca', 'thal'],\n",
+       "      dtype='object')"
+      ]
+     },
+     "execution_count": 15,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "X.columns"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "id": "37c8c85b",
+   "metadata": {
+    "scrolled": true
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "Index(['age', 'sex', 'cp', 'trestbps', 'chol', 'fbs', 'restecg', 'thalach',\n",
+       "       'exang', 'oldpeak', 'slope', 'ca', 'thal'],\n",
+       "      dtype='object')"
+      ]
+     },
+     "execution_count": 16,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "target.columns"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 49,
+   "id": "009dc1f7",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from sklearn.model_selection import GridSearchCV"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 50,
+   "id": "4381efe2",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "lr_grid = GridSearchCV(clf, {'C' : [0.05, 0.1, 1, 10, 100], 'max_iter' : [100, 500, 1000]}, scoring = 'f1', cv = skf)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 51,
+   "id": "296b9d90",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "GridSearchCV(cv=StratifiedKFold(n_splits=10, random_state=42, shuffle=True),\n",
+       "             estimator=LogisticRegression(random_state=42),\n",
+       "             param_grid={'C': [0.05, 0.1, 1, 10, 100],\n",
+       "                         'max_iter': [100, 500, 1000]},\n",
+       "             scoring='f1')"
+      ]
+     },
+     "execution_count": 51,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "lr_grid.fit(X, y)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 52,
+   "id": "9f8a6176",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "0.8697316821465428"
+      ]
+     },
+     "execution_count": 52,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "lr_grid.best_score_"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 79,
+   "id": "53113a34",
+   "metadata": {
+    "scrolled": true
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "1.0\n",
+      "0.8333333333333333\n",
+      "0.8000000000000002\n",
+      "0.888888888888889\n",
+      "0.888888888888889\n",
+      "0.8571428571428571\n",
+      "1.0\n",
+      "0.888888888888889\n",
+      "1.0\n",
+      "0.7272727272727273\n",
+      "1.0\n",
+      "1.0\n",
+      "0.888888888888889\n",
+      "0.8571428571428571\n",
+      "0.75\n",
+      "1.0\n",
+      "0.75\n",
+      "0.8\n",
+      "0.6666666666666665\n",
+      "1.0\n"
+     ]
+    }
+   ],
+   "source": [
+    "lr_pred = np.zeros(target.shape[0])\n",
+    "lr_f1 = 0\n",
+    "for tr_idx, val_idx in skf.split(X, y) :\n",
+    "    tr_x, tr_y = X.iloc[tr_idx], y.iloc[tr_idx]\n",
+    "    val_x, val_y = X.iloc[val_idx], y.iloc[val_idx]\n",
+    "    \n",
+    "    clf = LogisticRegression(random_state = 42)\n",
+    "    clf.fit(tr_x, tr_y)\n",
+    "    \n",
+    "    val_pred = clf.predict_proba(val_x)[:, 1]\n",
+    "    val_cls = [1 if p >= 0.45 else 0 for p in val_pred]\n",
+    "    \n",
+    "    val_f1 = f1_score(val_y, val_cls)\n",
+    "    lr_f1 += (val_f1 / 20)\n",
+    "    print(val_f1)\n",
+    "    \n",
+    "    fold_pred = clf.predict_proba(target)[:, 1] / 20\n",
+    "    lr_pred += fold_pred"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 84,
+   "id": "904c29e2",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "submission['lr'] = [1 if p >= 0.45 else 0 for p in lr_pred]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 80,
+   "id": "ffa8de68",
+   "metadata": {
+    "scrolled": false
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "0.8798556998556999"
+      ]
+     },
+     "execution_count": 80,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "lr_f1"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 62,
+   "id": "f4f5b15c",
+   "metadata": {
+    "scrolled": true
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "0.8421052631578948\n",
+      "0.7368421052631577\n",
+      "0.9473684210526316\n",
+      "0.9411764705882353\n",
+      "0.9411764705882353\n",
+      "0.8\n",
+      "0.7777777777777777\n",
+      "0.8421052631578948\n",
+      "0.75\n",
+      "0.823529411764706\n"
+     ]
+    }
+   ],
+   "source": [
+    "rf_pred = np.zeros(target.shape[0])\n",
+    "rf_f1 = 0\n",
+    "for tr_idx, val_idx in skf.split(X, y) :\n",
+    "    tr_x, tr_y = X.iloc[tr_idx], y.iloc[tr_idx]\n",
+    "    val_x, val_y = X.iloc[val_idx], y.iloc[val_idx]\n",
+    "    \n",
+    "    clf = RandomForestClassifier(random_state = 42, max_depth = 4)\n",
+    "    clf.fit(tr_x, tr_y)\n",
+    "    \n",
+    "    val_pred = clf.predict_proba(val_x)[:, 1]\n",
+    "    val_cls = [1 if p >= 0.45 else 0 for p in val_pred]\n",
+    "    \n",
+    "    val_f1 = f1_score(val_y, val_cls)\n",
+    "    rf_f1 += (val_f1 / 10)\n",
+    "    print(val_f1)\n",
+    "    \n",
+    "    fold_pred = clf.predict_proba(target)[:, 1] / 10\n",
+    "    rf_pred += fold_pred"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 63,
+   "id": "6e04651d",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "0.8402081183350533"
+      ]
+     },
+     "execution_count": 63,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "rf_f1"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 45,
+   "id": "8cd899b9",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "submission['target'] = [1 if p >= 0.45 else 0 for p in lr_pred]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 46,
+   "id": "26218014",
+   "metadata": {
+    "scrolled": false
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "1    86\n",
+       "0    66\n",
+       "Name: target, dtype: int64"
+      ]
+     },
+     "execution_count": 46,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "submission.target.value_counts()"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.8.8"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
