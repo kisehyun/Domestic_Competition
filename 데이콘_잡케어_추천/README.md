@@ -1,3 +1,4 @@
 <img width="1195" alt="스크린샷 2021-12-14 15 08 33" src="https://user-images.githubusercontent.com/49870977/145942723-a945f067-ff15-4315-8be0-21d560c7a704.png">
 
 - 2021 / 12 / 14 : 0.64983
+- 2021 / 12 / 24 : 0.70247
