@@ -3,11 +3,9 @@
 
 <img width="643" alt="스크린샷 2021-07-29 22 54 07" src="https://user-images.githubusercontent.com/49870977/127504487-01113b91-d519-4114-ba2c-5070115df15d.png">
 
+#### Evaluation : LogLoss
 
-
-### 월간 데이콘 14 | 금융 | 정형 | Logloss
-
-#### Private Learder Board : 275 / 714(Top 38.5%)
+#### Learder Board : 275 / 714(Top 38.5%)
 
 ### How To
 - LGBM, XGBoost, Catboost 앙상블을 시도함.
