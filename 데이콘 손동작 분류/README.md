@@ -2,7 +2,7 @@
 
 <img width="950" alt="스크린샷 2022-03-20 14 07 19" src="https://user-images.githubusercontent.com/49870977/159149068-04492a97-7b2a-42a6-bec1-7611439d5ebd.png">
 
-### Public : 33th / Private : 16th(Top 4.3%)
+#### Public : 33th / Private : 16th(Top 4.3%)
 
 ### How To :
 - Tabular -> CNN(CV) 접근법 사용 -> 굉장히 유효했다. 대부분 ML 계열 접근은 PB 기준 0.84 ~ 0.85 정도였음.
