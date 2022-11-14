@@ -1,4 +1,5 @@
 ### Public : 3 / 712 & Private : 2 / 712(score : 3.08359)
+[Leader Board](https://dacon.io/competitions/official/235985/leaderboard)
 
 
 < How To >
