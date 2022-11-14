@@ -1,6 +1,6 @@
 ### Public : 3 / 712 & Private : 2 / 712(score : 3.08359)
 
-[Code Share]([https://dacon.io/competitions/official/235985/leaderboard](https://dacon.io/competitions/official/235985/codeshare/7038?page=1&dtype=recent&fType=))
+[Code Share](https://dacon.io/competitions/official/235985/codeshare/7038?page=1&dtype=recent&fType=)
 
 [Leader Board](https://dacon.io/competitions/official/235985/leaderboard)
 
