@@ -3,13 +3,17 @@
 
 < How To >
 1. 파생 변수 생성에 주력
-- 위경도 좌표를 최대하 활용하고자 함.
+- 공공 데이터 활용
+- 위경도 좌표를 최대한 활용
 - 제주도, 한라산까지의 거리 활용
 - seasonality를 위해 7월, 8월만 여름으로 지정
 
-2. optuna르 활용한 튜닝
+2. optuna를 활용한 튜닝
 - LGBM, XGBoost는 gpu를 활용해 튜닝
 - CatBoost는 별도로 튜닝x
+
+3. 데이터를 다르게 구성하여 모델링
+- lane_count 값을 기준으로 모델링 진행 -> 1, 2, 3 차선 따로 모델링
 
 < Lesson Learned >
 - feature engineering is more better than others...
