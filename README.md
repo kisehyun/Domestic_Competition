@@ -24,7 +24,7 @@
 |집값 예측 경진대회|88 / 458|Dacon Basic|
 |손동작 분류 경진대회|16 / 365|Dacon Basic|
 |인구 데이터 기반 소득 예측 경진대회|36 / 277|Dacon Basic|
-|축구선수 유망 여부 예측 AI 경진대회|9 / 9|Dacon Basic|
+|축구선수 유망 여부 예측 AI 경진대회|9 / 89|Dacon Basic|
 
 <br>
 
